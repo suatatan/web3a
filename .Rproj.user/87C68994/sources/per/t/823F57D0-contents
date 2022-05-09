@@ -1,0 +1,403 @@
+library(shiny)
+library(shinyjs)
+library(igraph)
+library(writexl)
+## Only run examples in interactive R sessions
+if (interactive()) {
+    
+    ui <- fluidPage(
+        
+        shinyjs::useShinyjs(),
+        sidebarLayout(
+            sidebarPanel(
+                titlePanel(title =HTML("<b style='color:orange'>Web3A</b>: Network Analiz Aracı <br> <p style='color:blue; font-size: 12px;'>Dr. Suat ATAN</p>")),
+                
+                textAreaInput("metin1",
+                               value = "Finlandiya,Avrupa Birliği
+Malavi,Avrupa Birliği
+Macaristan,Avrupa Birliği
+Costa,Birleşik Devletler
+Dominika,Trinidad ve Tobago
+Danimarka,Avrupa Birliği
+Brunei,Japonya
+Dominik Cumhuriyeti,Birleşik Devletler
+Ekvator Ginesi,Avrupa Birliği
+Küba,Rusya
+Bangladeş,Avrupa Birliği
+Türkmenistan,Çin
+Hollanda,Avrupa Birliği
+Pakistan,Avrupa Birliği
+Libya,Avrupa Birliği
+Myanmar,Çin
+Fildişi Sahili,Avrupa Birliği
+Laos,Tayland
+Şeysel,Avrupa Birliği
+Venezuela,Birleşik Devletler
+Katar,Japonya
+Mısır,Avrupa Birliği
+Brezilya,Çin
+Şili,Çin
+Solomon Adaları,Çin
+Angola,Çin
+Saint Kitts ve Nevis,Birleşik Devletler
+Mozambik,Avrupa Birliği
+Kongo Demokratik Cumhuriyeti,Çin
+Birleşik Arap Emirlikleri,Avrupa Birliği
+Ürdün,Birleşik Devletler
+Saint Vincent ve Grenadines,Barbados
+Trinidad ve Tobago,Birleşik Devletler
+Haiti,Birleşik Devletler
+Namibya,İsviçre
+Yeni Zelanda,Çin
+Japonya,Birleşik Devletler
+İranlı,Çin
+Umman,Çin
+Tunus,Avrupa Birliği
+Madagaskar,Avrupa Birliği
+Polonyalı,Avrupa Birliği
+Maldivler,Avrupa Birliği
+Belçika,Avrupa Birliği
+Ekvador,Birleşik Devletler
+Kiribati,Fas
+Tacikistan,Türki
+Hong Kong,Çin
+Komorlar,Avrupa Birliği
+Gabon,Birleşik Devletler
+Sri Lanka,Avrupa Birliği
+Lüksemburg,Avrupa Birliği
+Suriye,Avrupa Birliği
+Lübnan,Suudi Arabistan
+Makedonyalı,Avrupa Birliği
+Meksikalı,Birleşik Devletler
+Saint Lucia,Birleşik Devletler
+Slovenya,Avrupa Birliği
+Kanada,Birleşik Devletler
+İsveç,Avrupa Birliği
+İspanya,Avrupa Birliği
+Almanya,Avrupa Birliği
+Malta,Avrupa Birliği
+İzlanda,Avrupa Birliği
+İtalya,Avrupa Birliği
+Endonezya,Çin
+Nikaragua,Birleşik Devletler
+Sırbistan,Avrupa Birliği
+Fiji,Birleşik Devletler
+Samoa,Avustralya
+Zimbabve,Güney Afrika
+Avrupa Birliği,Birleşik Devletler
+Portekiz,Avrupa Birliği
+Çin,Birleşik Devletler
+Jamaika,Birleşik Devletler
+İngiltere,Avrupa Birliği
+Romanya,Avrupa Birliği
+Suudi Arabistan,Çin
+Paraguay,Brezilya
+Slovakya,Avrupa Birliği
+Nijerya,Avrupa Birliği
+Güney Kore,Çin
+Peru,Çin
+Ruanda,DR Kongo
+Bahreyn,Suudi Arabistan
+İsrail,Birleşik Devletler
+Ukrayna,Avrupa Birliği
+Togo.,Benin
+Surinam,Birleşik Devletler
+Eritre,Çin
+İsviçre,Avrupa Birliği
+Fas,Avrupa Birliği
+Kamerunlu,Avrupa Birliği
+Vanuatu,Malezya
+Mali,Güney Afrika
+Kamboçya,Avrupa Birliği
+Bosna,Avrupa Birliği
+Beyaz Rusya,Rusya
+Hindistan,Avrupa Birliği
+Moğolistan,Çin
+Papua Yeni Gine,Singapur
+Çek Cumhuriyeti,Avrupa Birliği
+Mauritius,Avrupa Birliği
+Honduras,Birleşik Devletler
+Nijer,Avrupa Birliği
+Kuzey Kore,Çin
+Kenya,Avrupa Birliği
+Antigua ve Barbuda,Birleşik Devletler
+Sierra Leone,Fildişi Sahili
+Guyana,Kanada
+Azerbaycan,Avrupa Birliği
+Burkina Faso,İsviçre
+Moritanya,Çin
+Singapur,Çin
+Özbekistan,İsviçre
+Ermenistan,Avrupa Birliği
+Burundi,DR Kongo
+Grenada,Dominika
+Svaziland,Güney Afrika
+Sudan,Çin
+Sao Tome ve Principe,Avrupa Birliği
+Bhutan,Hindistan
+Somali,Suudi Arabistan
+Kazakistan,Avrupa Birliği
+Yunanistan,Avrupa Birliği
+Arjantin,Brezilya
+Hırvatistan,Avrupa Birliği
+Bolivya,Brezilya
+Zambiya,İsviçre
+Gine-Bissau,Hindistan
+Cezayir,Avrupa Birliği
+Rusya,Avrupa Birliği
+Norveçli,Avrupa Birliği
+Arnavutluk,Avrupa Birliği
+Estonya,Avrupa Birliği
+Kolombiya,Birleşik Devletler
+Macau,Hong Kong
+Türki,Avrupa Birliği
+Nepal,Hindistan
+Bulgaristan,Avrupa Birliği
+Fransa,Avrupa Birliği
+Irak,Çin
+Benin,Hindistan
+Kırgızistan,İsviçre
+Senegal,Mali
+Filipinler,Japonya
+Yemen,Suudi Arabistan
+Cibuti,Etiyopya
+Güney Afrika,Avrupa Birliği
+Uganda,Avrupa Birliği
+Vietnam,Birleşik Devletler
+Malezya,Singapur
+Mikronezya Federal Devletleri,Guam
+Birleşik Devletler,Avrupa Birliği
+Avustralya,Çin
+Barbados,Birleşik Devletler
+Çad,Birleşik Devletler
+Tanzanya,İsviçre
+Lesotho,Güney Afrika
+Gambiya,Mali
+Tonga,Yeni Zelanda
+Bahamalar,Birleşik Devletler
+Panama,Avrupa Birliği
+Tayland,Birleşik Devletler
+Moldova,Avrupa Birliği
+El Salvador,Birleşik Devletler
+İrlanda,Avrupa Birliği
+Etiyopya,Avrupa Birliği
+Gürcistan,Avrupa Birliği
+Tayvan,Çin
+Avusturya,Avrupa Birliği
+Gine,Avrupa Birliği
+Yeşil Burun,Avrupa Birliği
+Belize,Avrupa Birliği
+Afganistan,Hindistan
+Orta Afrika Cumhuriyeti,Avrupa Birliği
+Letonya,Avrupa Birliği
+Kongo,Çin
+Guatemala,Birleşik Devletler
+Kuveyt,Güney Kore
+Litvanya,Avrupa Birliği
+Karadağ,Avrupa Birliği
+Botsvana,Avrupa Birliği
+Uruguay,Brezilya
+Gana,Avrupa Birliği
+Kıbrıs,Avrupa Birliği
+"
+                              ,label = "A: Kenar Listesi", rows = 6),
+                tags$hr(),
+                checkboxInput("yonlu_grafik_mi", "B1: Yönlü (oklu) grafik mi", TRUE),
+                checkboxInput("input_dugum_etiket_gorunsun_mu","B2: Etiket Görünsün Mü",TRUE),
+                #tags$div(HTML("<a>İlk Kullanım: Web3A nedir?</a>")),
+                #tags$div(HTML("<a>CSV dosyası nedir?</a>"))
+                tags$hr(),
+                tags$div("Opsiyonel Seçenekler:"),
+                tabsetPanel(type="tabs",tabPanel("X1: Örnek Ağ Seçimi",
+                                                 selectInput("agsec","Ağ seçimi",
+                                                             choices = c('Basit Ağ'="basit",
+                                                                         'Game of Thrones Karakterleri'='gameof',
+                                                                         'Trump İlişkileri'='trump')),
+                                                 #sliderInput("cizimboyu","Çizim Boyu",min=400,max=1900,step = 10,value=500),
+                                                 
+                                                 ),
+                                        tabPanel("X2: Grafik Seçenekleri",
+                                                 checkboxInput("dugumboyu_dereceye_gore_ayarlansinmi",
+                                                               "Düğüm Boyunu Dereceye Göre Ayarla",TRUE),
+                                                 
+                                                 sliderInput("etiketboyu","Etiket Boyu",min=1,max=30,step = 0.01,value=NULL),
+                                                 sliderInput("dugumboyu","Düğüm Boyu",min=0.01,max=100,step = 0.01,value=NULL),
+                                                 sliderInput("okboyu","Ok Boyu",min=0.01,max=2,step = 0.001,value=NULL),
+                                                 selectInput("duzen","Ağ Düzeni",choices = c("Fruchterman ReinGold"="fh",
+                                                                                             "Kamada Kawai" ="kk",
+                                                                                             "Sugiyama" = "sg",
+                                                                                             "Bipartite" = "bi",
+                                                                                             "Ağac duzeni" = "tree",
+                                                                                             "Yıldız Düzeni" ="star",
+                                                                                             "Dairesel Düzen" = "circle",
+                                                                                             "David Harel"="dh")))),
+                tags$div("Analizi indirin"),
+                downloadButton("dl", "Düğüm İstatistiklerini İndir")
+                
+            ),
+            mainPanel(
+                tabsetPanel(type = "tabs",
+                            tabPanel("C: Çizim", plotOutput("cizim",width = "950px")),
+                            tabPanel("D: Data", DT::dataTableOutput("contents")),
+                            tabPanel("E: Ağ İstatistik",htmlOutput("agis")),
+                            tabPanel("F: Derece Dağılımı",plotOutput("derecedag")),
+                            tabPanel("G: Düğüm İstatistik",DT::dataTableOutput("dugumis")),
+                            tabPanel("H: Hakkında",h1("Hakkında"),
+                                     div(HTML("Uygulama Dr. Suat ATAN tarafından geliştirimiştir. 
+                                         Kişisel web sayfası: 
+                                              <a target='_blank' href='http://www.suatatan.wordpress.com'>http://www.suatatan.wordpress.com</a><br>
+                                              Bu uygulama <b>sadece akademik ve eğitimsel </b> amaçlarla ücretsizdir. Ticari kullanım için lütfen geliştiricisi ile
+                                              temasa geçin.
+                                              <br>
+                                              <br>
+                                              
+                                              Akademik çalışmalarınızda bu <b>NeAnar<b> kullandığınız takdirde uygulamaya atıf yapabilirsiniz. 
+                                              Böylece başka araştırmacıların da faydalanması temin edilebilir. 
+                                              <br>
+                                              
+                                              Uygulama ile ilgili sorun yaşadığınız ya da sormak istediğiniz bir soru varsa suatatan+neanar@gmail.com 
+                                              adresine yazabilirsiniz.
+                                              
+                                              "))
+                                     
+                                     ))
+
+            )
+        )
+    )
+
+
+
+# Server----------------------------------    
+    server <- function(input, output,session) {
+        
+        
+        # Fonksiyonlar----------------------------------
+        text2data<-function(text,harici=NA){
+            if(harici=="gameof"){
+                data = read.csv("https://raw.githubusercontent.com/melaniewalsh/sample-social-network-datasets/master/sample-datasets/game-of-thrones/got-edges.csv")
+                shinyjs::hide(id="metin1")
+                return(data)
+            }
+            if(harici=="trump"){
+                data = read.csv("https://raw.githubusercontent.com/melaniewalsh/sample-social-network-datasets/master/sample-datasets/trump/trump-edges.csv")
+                shinyjs::hide(id="metin1")
+                return(data)
+            }
+            else{
+                con <- textConnection(text)
+                data <- read.csv(con,header = FALSE)
+                close(con)
+                shinyjs::show(id="metin1")
+                return(data)
+            }
+            
+        }    
+        duzenle <- function(g,input_from_duzen){
+            #---duzen-----
+            duzen <- layout.davidson.harel
+            if(input_from_duzen == "fr"){
+                duzen <- layout.fruchterman.reingold(g)
+            }
+            if(input_from_duzen == "dh"){
+                duzen <- layout.davidson.harel(g)
+            }
+            if(input_from_duzen == "kk"){
+                duzen <- layout.kamada.kawai(g)
+            }
+            if(input_from_duzen == "circle"){
+                duzen <- layout.circle(g)
+            }
+            if(input_from_duzen == "star"){
+                duzen <- layout_as_star(g)
+            }
+            if(input_from_duzen == "sugi"){
+                duzen <- layout_with_sugiyama(g)
+            }
+            if(input_from_duzen == "tree"){
+                duzen <- layout_as_tree(g)
+            }
+            if(input_from_duzen == "bipartite"){
+                duzen <- layout_as_bipartite(g)
+            }
+            return(duzen)
+            #----duzen/----
+        }
+        dugumboyu <- function(dugumboyu_dereceye_gore_ayarlansinmi,g, input_dugum_boyu){
+            if(dugumboyu_dereceye_gore_ayarlansinmi==TRUE){
+                shinyjs::hide(id="dugumboyu")
+                return(degree(g))
+                
+            }
+            else{
+                shinyjs::show(id="dugumboyu")
+                return(input_dugum_boyu)
+            }
+        }
+        dugum_istatistigi <- function(g){
+            ad <- as.character(V(g))
+            etiket <- as.character(V(g)$name)
+            derece <- degree(g)
+            icderece <- degree(g,mode="in")
+            disderece <- degree(g,mode="out")
+            arasindalik <- betweenness(g)
+            yakinlik <- closeness(g)
+            return(data.frame(ad,etiket,icderece,disderece,derece,arasindalik,yakinlik))
+        }
+        #------------------------------------
+        
+        
+        
+        output$cizim = renderPlot({
+            g<-graph_from_data_frame(text2data(input$metin1,input$agsec)
+                                     ,directed = input$yonlu_grafik_mi)
+            V(g)$label.cex = input$etiketboyu
+            plot(g,
+                     layout=duzenle(g,input$duzen),
+                     vertex.label= if(!input$input_dugum_etiket_gorunsun_mu){NA}, 
+                     edge.arrow.size=input$okboyu,
+                     vertex.size = dugumboyu(dugumboyu_dereceye_gore_ayarlansinmi = input$dugumboyu_dereceye_gore_ayarlansinmi,g, input$dugumboyu))
+            
+            
+        }, width=900,height=900)
+        #-------------
+        output$contents <- DT::renderDataTable({
+            text2data(input$metin1,input$agsec)
+        })
+        output$agis <- renderUI({
+            g<-graph_from_data_frame(text2data(input$metin1,input$agsec))
+            yogunluk <- igraph::graph.density(g)
+            a<-sprintf("Ağ Yoğunluğu: %s <br>",yogunluk);
+            b<-sprintf("Düğüm adedi: %s <br>", gsize(g))
+            c<-sprintf("Bağlantı adedi: %s <br>",gorder(g) )
+            d<- sprintf("Uzaklık Ortalaması: %s <br>",mean_distance(g))
+            HTML(a,b,c,d)
+            
+        })
+        output$dugumis <- DT::renderDataTable({
+            g<-graph_from_data_frame(text2data(input$metin1,input$agsec))
+            dugum_istatistigi(g)
+            
+        })
+        output$derecedag <- renderPlot({
+            g<-graph_from_data_frame(text2data(input$metin1,input$agsec))
+            deg.dist <- degree_distribution(g, cumulative=T, mode="all")
+            plot(deg.dist,col="Red",xlab="Index",ylab="Derece Dağılımı")
+            
+        })
+        
+        output$dl <- downloadHandler(
+            
+            filename = function() { "neanar_by_drsuatatan.xlsx"},
+            content = function(file) {
+                g<-graph_from_data_frame(text2data(input$metin1,input$agsec))
+                dis <- dugum_istatistigi(g)
+                write_xlsx(dis, path = file)}
+        )
+        
+        
+        
+    }
+    
+    shinyApp(ui, server)
+}

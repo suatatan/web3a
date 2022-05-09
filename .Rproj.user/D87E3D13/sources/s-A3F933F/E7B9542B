@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1652079167273.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "401871779",
+    "id" : "E7B9542B",
+    "lastKnownWriteTime" : 1652079324,
+    "last_content_update" : 1652079324968,
+    "path" : "F:/05-suat-chore/26-web3a/app.R",
+    "project_path" : "app.R",
+    "properties" : {
+        "cursorPosition" : "214,101",
+        "scrollLine" : "184"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
